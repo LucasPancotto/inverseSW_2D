@@ -1,0 +1,9 @@
+# Ignore data / results directories
+2dcosk5_hu200/
+2dcosk5_hu200_hdata/
+2dgauss_double/
+2dgauss_double_hdata/
+*.npy
+*.dat
+*.png
+*.pdf
