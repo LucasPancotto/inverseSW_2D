@@ -28,8 +28,8 @@ plt.rcParams.update({"text.usetex": True,
 })
 
 ##################################################
-# particular_path = '/home/lpancotto/code/tesis/inverseSW_2D/2dgauss_double_hdata/alpha_test/'
-particular_path = '/home/lpancotto/code/tesis/inverseSW_2D/2dcosk5_hu200_hdata/'
+particular_path = '/home/lpancotto/code/tesis/inverseSW_2D/2dgauss_double_hdata/alpha_test/'
+# particular_path = '/home/lpancotto/code/tesis/inverseSW_2D/2dcosk5_hu200_hdata/'
 path = particular_path + 'time_frames'
 figure_path = path +'/figures'
 #############################################
@@ -81,8 +81,8 @@ for j, ax in enumerate(axs1):
     else:
         y0=348
 
-    ax.plot(domain, U[:,y0], label = r'$Ground$ $truth$', color='black')
-    ax.plot(domain, u[:,y0], label = r'$PINN$', color = 'red', linestyle = '--', alpha=0.7)
+    ax.plot(domain, U[:,y0], label = r'Ground truth', color='black')
+    ax.plot(domain, u[:,y0], label = r'PINN', color = 'red', linestyle = '--', alpha=0.7)
 
     ax.set_title(r'$t=$'+f'${tidxs[j]/240:.1f}$'+ r'$T$', fontsize=24, pad=10)
 
@@ -99,7 +99,7 @@ y_max = max(ax.get_ylim()[1] for ax in axs1)
 for ax in axs1:
     ax.set_ylim(y_min, y_max)
 
-axs1[0].legend(fontsize = 22, loc='lower right')
+axs1[0].legend(fontsize = 22, loc='center right')
 axs1[0].set_ylabel(r'$u/c$', fontsize = 28)
 
 
@@ -109,14 +109,20 @@ for i, ax in enumerate(axs2):
     ref = ref_times[i]
     # U = ref[0]/c
     # V = ref[1]/c
-    ETA = (ref[2]-h0)/eta0
+    if particular_path == '/home/lpancotto/code/tesis/inverseSW_2D/2dcosk5_hu200_hdata/':
+        ETA = (ref[2]-h0)/eta0
+    else:
+        ETA = (ref[2]-h0)/eta0
 
 
     pinn = pinn_times[i]
     # u = (pinn[0] - pinn[0].mean())/c
     # v = (pinn[1] - pinn[1].mean())/c
     h = pinn[2]
-    eta = (h-h0)/eta0
+    if particular_path == '/home/lpancotto/code/tesis/inverseSW_2D/2dcosk5_hu200_hdata/':
+        eta = (h)/eta0
+    else:
+        eta = (h-h0)/eta0
 
     # ax.yaxis.set_major_formatter(FuncFormatter(h_latex_sci_notation))
     ax.set_xlim(domain[0], domain[-1])  # <-- This removes x-axis margin
@@ -125,8 +131,8 @@ for i, ax in enumerate(axs2):
     #if i==0:
         #ax.yaxis.set_major_formatter(FuncFormatter(u_latex_sci_notation))
 
-    ax.plot(domain, ETA[:,y0], label = r'$Ground$ $truth$', color='black')
-    ax.plot(domain, eta[:,y0], label = r'$PINN$', color = 'red', linestyle='--', alpha =0.7)
+    ax.plot(domain, ETA[:,y0], label = r'Ground truth', color='black')
+    ax.plot(domain, eta[:,y0], label = r'PINN', color = 'red', linestyle='--', alpha =0.7)
 
 # axs2[0].legend(loc='center right', fontsize = 30)
 axs2[0].set_ylabel(r'$\eta/\eta_0$', fontsize = 28) # no ylabel, only legend
